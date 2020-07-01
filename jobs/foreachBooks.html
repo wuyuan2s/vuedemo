@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			 #list { 
+			/*float:left;  往左浮动*/ 
+			list-style:none; /* 将默认的列表符号去掉 */
+			margin:10; /* 将默认的外边距 */
+			padding:10; /* 将默认的内边距去掉 */
+			}
+		</style>
+		<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
+	</head>
+	<body>
+		
+		<div id="app">
+			<!-- 只渲染一次，不可以二次修改 -->
+			<h2 v-once>{{ message }}</h2>
+			<hr />
+			
+			<ul>
+				<li v-for="item in books">{{item}}</li>
+			</ul>
+			<!-- 遍历对象-->
+			<!--<ul>
+				<li v-for="(value, key) in books" id="list">{{key + '=' + value}}</li>
+			</ul>-->
+			<!-- 按照对象的属性遍历 -->
+			<ul>
+				<li v-for="book in books" id="list">{{book.id}}<span>==</span>{{book.proDate}}</li>
+			</ul>
+			
+			<hr />
+			
+			<table class="table">
+				<tr>
+					<td>数据id</td>
+					<td>书籍名称</td>
+					<td>出版日期</td>
+					<td>价格</td>
+					<td>购买数量</td>
+					<td>操作</td>
+				</tr>
+				<tr v-for="(book,index) in books">
+					<td >{{book.id}}</td>
+					<td >{{book.bookName}}</td>
+					<td >{{book.proDate}}</td>
+					<td >{{book.price}}</td>
+					<td ><button id="sel" value="+" @click="add(index)">+</button>&emsp;{{book.num}}&emsp;<button @click="del(index)" value="-"> -</button></td>
+					<td><button value="移除" @click="remove(index)">移除</button></td>
+				</tr>
+			</table>
+			<span style="color: red;">总数：{{total}}</span>
+		</div>
+			
+		
+		<script src="../js/vue.min.js"></script>
+		<script src="../js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript">
+
+			var app = new Vue({
+			  el: '#app',// 挂载的标签
+			  parentMessage: 'Parent',
+			  data: {
+			    message: 'Hello Vue!',
+			    books: [{
+			    	id: 1,
+			    	proDate: '2020-01',
+			    	price: 58,
+			    	num: 1,
+			    	bookName: 'Java',
+			    },
+			    {
+			    	id: 2,
+			    	proDate: '2020-02',
+			    	price: 68,
+			    	num: 1,
+			    	bookName: 'JavaScript',
+			    },
+			    {
+			    	id: 3,
+			    	proDate: '2020-03',
+			    	price: 88,
+			    	num: 1,
+			    	bookName: 'PHP',
+			    },
+			    {
+			    	id: 4,
+			    	proDate: '2020-04',
+			    	price: 98,
+			    	num: 1,
+			    	bookName: '数据结构',
+			    }]
+			  },
+			  methods: {
+			  	add: function(index){
+			  		this.books[index].num++
+
+			  	},
+			  	del: function(index){
+			  		if(this.books[index].num == 1)
+			  			return false;
+			  		
+			  		this.books[index].num--
+
+			  	},
+			  	remove: function(index){
+			  		this.books.splice(index,1)
+			  	}
+			  },
+			  computed: {
+				   total: function() {
+					var count = 0;
+				    this.books.forEach(function(item) {
+            		count += item.num * item.price;
+				    })
+				return count
+   }
+  }
+			 
+			})
+			
+		</script>
+	</body>
+</html>

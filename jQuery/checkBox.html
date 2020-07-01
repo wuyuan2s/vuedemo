@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+		<input type="checkbox" name="select" id="select" value="足球" />足球
+		<input type="checkbox" name="select" id="select" value="蓝球" />蓝球
+		<input type="checkbox" name="select" id="select" value="球" />羽毛球球
+		<input type="checkbox" name="select" id="select" value="球" />乒乓球球
+		<br />
+		<input type="button" name="selectAll" id="selectAll" value="全选" />
+		<input type="button" name="selectNull" id="selectNull" value="全不选" />
+		<input type="button" name="selectOther" id="selectOther" value="反选" />
+		
+		<script type="text/javascript" src="../js/jquery-1.7.2.js"></script>
+		<script type="text/javascript">
+			//绑定全选单击事件
+			$(function(){
+				$("#selectAll").click(function () {
+					// 返回是否被选中
+					var a = $("input[type='checkbox']").prop("checked");
+
+					$(":checkbox").prop("checked",true);
+				})
+			})
+			
+			//绑定全不选单击事件
+			$(function(){
+				$("#selectNull").click(function () {
+					$(":checkbox").prop("checked",false);
+				})
+			})
+			//绑定反选选单击事件
+		</script>
+	</body>
+</html>
