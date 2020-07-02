@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<table id="table">
+			
+		</table>
+		
+		<h2>总价格：</h2>
+		
+		<script type="text/javascript">
+			//1、定义数组
+			//定义变量的方式：var, (let, const)ES6
+			/*
+				var: 作用不明确
+					 全局变量和局部变量分不清；
+				let：添加了一个叫块级作用域的概念，才解决了这个问题；
+				
+				所以开发中尽量使用 let 定义；
+			*/
+		  /* let books = []; // new Array();
+		   books[0] = {id: 1, name: 'Java'};
+		   books[1] = {id: 2, name: 'php'};
+		   console.log(books); */
+		   
+		   let books = [{
+		       	id: 1,
+		       	proDate: '2020-01',
+		       	price: 58,
+		       	num: 1,
+		       	bookName: 'Java',
+		       },
+		       {
+		       	id: 2,
+		       	proDate: '2020-02',
+		       	price: 68,
+		       	num: 1,
+		       	bookName: 'JavaScript',
+		       },
+		       {
+		       	id: 3,
+		       	proDate: '2020-03',
+		       	price: 88,
+		       	num: 1,
+		       	bookName: 'PHP',
+		       },
+		       {
+		       	id: 4,
+		       	proDate: '2020-04',
+		       	price: 98,
+		       	num: 1,
+		       	bookName: '数据结构',
+		       }];
+		   
+			//2、获取id为table的标签
+			let table = document.getElementById('table');
+			
+			// 使用js完成表格
+			// 1添加表头（thead）
+			let thead = document.createElement("thead");
+			// 2创建tr,th标签
+			let tr = document.createElement("tr");
+			// 3附加到<thead>
+			thead.appendChild(tr);
+			
+			let th = document.createElement("th");
+			// 4创建 td 标签
+			let td = document.createElement("td");
+			th.innerText = "ID";
+			tr.appendChild(th);
+			
+			th = document.createElement("th");
+			th.innerText = "名称";
+			tr.appendChild(th);
+			
+			th = document.createElement("th");
+			th.innerText = "日期";
+			tr.appendChild(th);
+			
+			th = document.createElement("th");
+			th.innerText = "价格";
+			tr.appendChild(th);
+			
+			th = document.createElement("th");
+			th.innerText = "数量";
+			tr.appendChild(th);
+			
+			th = document.createElement("th");
+			th.innerText = "操作";
+			tr.appendChild(th);
+			
+			// 5将thead附加到table
+			table.appendChild(thead);
+			// 6创建表格body
+			let tbody = document.createElement("tbody");
+			table.appendChild(tbody);
+			tr = document.createElement("tr");
+			tbody.appendChild(tr);
+			
+			// js 中foreach循环遍历对象数组
+			for(let item of books){
+				console.log(item.id);
+				
+				tr = document.createElement("tr");
+				tbody.appendChild(tr);
+				let td = document.createElement("td");
+				td.innerText = item.id;
+				tr.appendChild(td);
+				
+				td = document.createElement("td");
+				td.innerText = item.bookName;
+				tr.appendChild(td);
+				
+				td = document.createElement("td");
+				td.innerText = item.proDate;
+				tr.appendChild(td);
+				
+				td = document.createElement("td");
+				td.innerText = item.price;
+				tr.appendChild(td);
+				
+				td = document.createElement("td");
+				td.innerHTML += "<button type='button'>-</button>&emsp;";
+				td.innerHTML += item.num;
+				td.innerHTML += "&emsp;<button type='button'>+</button>";
+				tr.appendChild(td);
+				
+				td = document.createElement("td");
+				td.innerHTML = "<button type='button'>移除</button>";
+				tr.appendChild(td);
+			}
+			// 绑定总价格的标签
+			let h2 = document.getElementsByTagName("h2")[0];
+			
+			// 引入 js 高阶函数 map/reduce 处理对象数组
+			/*  reduce: 4个参数，第一个是返回结果，第一次执行数组的第一个元素；
+							   第二个参数是后面的元素;
+							   第三个参数是处理的数组下标;
+							   第四个参数是数组; 
+							   */
+			// reduce 处理对象数组
+			let result = books.reduce(function (returnVal, nextItem, index, arr){
+				let sum = 0;
+				// 由于 reduce 处理时，returnVal 第一次是该数组对象的第一个对象，所以单独处理；
+				if(index === 1){
+					return sum = returnVal.price * returnVal.num + nextItem.price * nextItem.num;
+				}
+				return returnVal + nextItem.price * nextItem.num;
+			})
+			console.log(result);
+			h2.append(result);
+		</script>
+		
+	</body>
+</html>

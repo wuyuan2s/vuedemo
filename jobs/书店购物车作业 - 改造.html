@@ -4,10 +4,16 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
-		
+		<style>
+			.active {
+			   background: #fd7522;
+			   border: 1px solid #fd7522;
+			   color: #ff0000;
+			 }
+		</style>
 	</head>
 	<body>
-		
+
 		<div id="app">
 			
 			<table class="table">
@@ -20,7 +26,13 @@
 					<th>操作</th>
 				</thead>
 				<tbody>
-				<tr v-for="(book,index) in books">
+					 <!-- 关于key的作用：
+					 如果不加key，当我们删除第二个选中的选项时，会把√移到下一个选项；
+					  而第一个选项不会，因为在vue的data中显式的定义了该CheckBox的值，而鼠标点击则修改了DOM，
+					  如果不加 key ，则 vue 不会更新DOM-->
+				<tr v-for="(book,index) in books" :key = "book.id" :class="{active : book.isChecked}">
+					 <!-- v-bind 语法糖 -->
+					<td ><input type="checkbox" :checked="book.isChecked" @click="selected(index)"></td>
 					<td >{{book.id}}</td>
 					<td >{{book.bookName}}</td>
 					<td >{{book.proDate}}</td>
@@ -30,12 +42,13 @@
 				</tr>
 				</tbody>
 			</table>
-			<span style="color: red;">总数：{{total}}</span>
+			<span style="color: red; font-size:40px;" > 总价格：{{total}}</span>
+			<h1 v-if="books.length == 0">没有商品！</h1>
 		</div>
 			
 		
+        <script src="../js/vue.min.js"></script>
 		<script src="../js/vue.min.js"></script>
-		<script src="../js/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript">
 
 			let app = new Vue({
@@ -44,6 +57,7 @@
 			  data: {
 			    message: 'Hello Vue!',
 			    books: [{
+					isChecked: true,
 			    	id: 1,
 			    	proDate: '2020-01',
 			    	price: 58,
@@ -51,6 +65,7 @@
 			    	bookName: 'Java',
 			    },
 			    {
+					isChecked: false,
 			    	id: 2,
 			    	proDate: '2020-02',
 			    	price: 68,
@@ -58,6 +73,7 @@
 			    	bookName: 'JavaScript',
 			    },
 			    {
+					isChecked: false,
 			    	id: 3,
 			    	proDate: '2020-03',
 			    	price: 88,
@@ -65,16 +81,24 @@
 			    	bookName: 'PHP',
 			    },
 			    {
+					isChecked: false,
 			    	id: 4,
 			    	proDate: '2020-04',
 			    	price: 98,
 			    	num: 1,
 			    	bookName: '数据结构',
-			    }]
+			    }],
+				active: '',
 			  },
 			  methods: {
+				  selected(index){
+				     // this.active = name;
+					 this.books[index].isChecked = !this.books[index].isChecked;
+					 console.log(this.books[index].isChecked);
+				  },
 			  	add: function(index){
 			  		this.books[index].num++
+
 			  	},
 			  	del: function(index){
 			  		if(this.books[index].num == 1)
