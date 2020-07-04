@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<!--在组件的使用中 :p-title 只能用“-”分隔（html中，js中可以使用驼峰式命名）  -->
+			<blog-post :p-title="title" :hello-title="helloTitle"></blog-post>
+		</div>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			Vue.component('blog-post', {
+				data: function(){
+					return {
+						title: '子组件的title'
+					}
+				},
+				// 在这里可以使用驼峰式命名，但是在html中必须使用“-”分隔
+				props: ['pTitle', 'helloTitle'],
+				template: `<h2>
+							{{pTitle}}<br>
+							{{title}}<br>
+							{{helloTitle}}
+							</h2>`
+			})
+			let vm = new Vue({
+				el: '#app',
+				data: {
+					message: 'Vue',
+					title: 'app的title',
+					helloTitle: 'hello！'
+				}
+			})
+		</script>
+	</body>
+</html>
