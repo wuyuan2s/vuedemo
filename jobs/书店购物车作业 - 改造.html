@@ -18,6 +18,7 @@
 			
 			<table class="table">
 				<thead>
+					<th>选中</th>
 					<th>数据id</th>
 					<th>书籍名称</th>
 					<th>出版日期</th>
@@ -31,18 +32,24 @@
 					  而第一个选项不会，因为在vue的data中显式的定义了该CheckBox的值，而鼠标点击则修改了DOM，
 					  如果不加 key ，则 vue 不会更新DOM-->
 				<tr v-for="(book,index) in books" :key = "book.id" :class="{active : book.isChecked}">
-					 <!-- v-bind 语法糖 -->
-					<td ><input type="checkbox" :checked="book.isChecked" @click="selected(index)"></td>
+					 <!-- v-bind 语法糖 :-->
+					<td ><input type="checkbox" :checked="book.isChecked" @click="selected(index)" v-model="checkedNames" :value="book.id"></td>
 					<td >{{book.id}}</td>
 					<td >{{book.bookName}}</td>
 					<td >{{book.proDate}}</td>
-					<td >{{book.price}}</td>
+					<!-- <td >{{formatPrice(book.price)}}</td> -->
+					<td >{{book.price | formatPrice}}</td>
+					<!-- v-on : 语法糖 @ -->
 					<td ><button id="sel" value="+" @click="add(index)">+</button>&emsp;{{book.num}}&emsp;<button @click="del(index)" value="-"> -</button></td>
 					<td><button value="移除" @click="remove(index)">移除</button></td>
 				</tr>
 				</tbody>
 			</table>
-			<span style="color: red; font-size:40px;" > 总价格：{{total}}</span>
+			<button @click="submit(books)">结账</button>
+			<!-- <span>Checked names: {{ checkedNames }}</span> -->
+			
+			<!-- <span style="color: red; font-size:40px;" > 总价格：{{formatPrice(total)}}</span> -->
+			<span style="color: red; font-size:40px;" > 总价格：{{total | formatPrice}}</span>
 			<h1 v-if="books.length == 0">没有商品！</h1>
 		</div>
 			
@@ -57,7 +64,7 @@
 			  data: {
 			    message: 'Hello Vue!',
 			    books: [{
-					isChecked: true,
+					isChecked: false,
 			    	id: 1,
 			    	proDate: '2020-01',
 			    	price: 58,
@@ -89,8 +96,15 @@
 			    	bookName: '数据结构',
 			    }],
 				active: '',
+				checkedNames: []
 			  },
 			  methods: {
+				  submit(item){
+					  this.checkedNames.forEach(function(i) {
+					  console.log(i);
+						
+					  })
+				  },
 				  selected(index){
 				     // this.active = name;
 					 this.books[index].isChecked = !this.books[index].isChecked;
@@ -118,8 +132,22 @@
             		count += item.num * item.price;
 				    })
 				return count
-   }
-  } 
+				// return this.books.reduce((returnVal, nextItem) => returnVal + nextItem.price * nextItem.num)
+			  },
+			  // 计算属性中的传值，return一个函数
+			  formatPrice: function(){
+				  // return function(price) {
+					 //  console.log(price);
+					 //  return '¥' + price.toFixed(2);
+				  // }
+				  //箭头函数的写法
+				  return price => '¥' + price.toFixed(2);
+			  }
+			 },
+			 // 改用过滤器传参
+			 filters: {
+				 formatPrice: price => '¥' + price.toFixed(2)
+			 }
 			})
 			
 		</script>
