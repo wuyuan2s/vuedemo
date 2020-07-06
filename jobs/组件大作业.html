@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.center {
+			    margin: auto;
+			    width: 50%;  
+			    padding: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div style="border: 3px solid black;">
+			<h1 class="center">--我是标题--</h1>
+		</div>
+		
+		<div id="demo" style="">
+			<div id="menu" style="border: 3px solid black; float: left; width: 200px; height: 500px;">
+				<button id="" @click="usermag()">
+					用户管理
+				</button><br />
+				<button id="" @click="shoppingCart()">
+					显示购物车
+				</button>
+			</div>
+			<div v-if="isShowUser"><span v-model="user">{{user}}</span>
+								<user-manage></user-manage>
+			</div> 
+			<div v-if="isShowCart"><span v-model="cart">{{cart}}</span></div>
+		</div>
+		<div style="border: 3px solid black; float: left;  width: 100%;">
+			<h1 class="center">--我是底部--</h1>
+		</div>
+		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		
+			let userManager = {
+				template: `
+					<p>test</p>
+				`
+			}
+			let vm = new Vue({
+				el: "#demo",
+				data: {
+					messange: 'wuyuan',
+					isShowUser: false,
+					isShowCart: false,
+					user: '我是用户管理',
+					cart: '显示购物车',
+				},
+				methods:{
+				shoppingCart: function(){
+					this.isShowCart = true;
+					this.isShowUser = false;
+				},
+				usermag: function(){
+					this.isShowUser = true;
+					this.isShowCart = false
+				}
+				},
+				components: {
+					// 局部组件
+					 'user-manage': userManager
+				}
+			})
+		</script>
+	</body>
+</html>

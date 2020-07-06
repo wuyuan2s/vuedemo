@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -15,7 +15,7 @@
 	<body>
 
 		<div id="app">
-			
+			<div v-if="books.length">
 			<table class="table">
 				<thead>
 					<th>选中</th>
@@ -37,10 +37,11 @@
 					<td >{{book.id}}</td>
 					<td >{{book.bookName}}</td>
 					<td >{{book.proDate}}</td>
-					<!-- <td >{{formatPrice(book.price)}}</td> -->
+<!--					 过滤器写法 -->
 					<td >{{book.price | formatPrice}}</td>
 					<!-- v-on : 语法糖 @ -->
-					<td ><button id="sel" value="+" @click="add(index)">+</button>&emsp;{{book.num}}&emsp;<button @click="del(index)" value="-"> -</button></td>
+<!--					当数量唯一时，不可用再操作减号：v-bind:disabled="book.num <= 1"-->
+					<td ><button id="sel" value="+" @click="add(index)">+</button>&emsp;{{book.num}}&emsp;<button @click="del(index)" v-bind:disabled="book.num <= 1"> -</button></td>
 					<td><button value="移除" @click="remove(index)">移除</button></td>
 				</tr>
 				</tbody>
@@ -50,7 +51,8 @@
 			
 			<!-- <span style="color: red; font-size:40px;" > 总价格：{{formatPrice(total)}}</span> -->
 			<span style="color: red; font-size:40px;" > 总价格：{{total | formatPrice}}</span>
-			<h1 v-if="books.length == 0">没有商品！</h1>
+			</div>
+			<h1 v-else>没有选中商品！</h1>
 		</div>
 			
 		

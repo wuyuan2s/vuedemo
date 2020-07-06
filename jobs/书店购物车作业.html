@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
@@ -77,7 +77,7 @@
 			  		this.books[index].num++
 			  	},
 			  	del: function(index){
-			  		if(this.books[index].num == 1)
+			  		if(this.books[index].num === 1)
 			  			return false;
 			  		
 			  		this.books[index].num--
@@ -92,7 +92,7 @@
 					var count = 0;
 				    this.books.forEach(function(item) {
             		count += item.num * item.price;
-				    })
+				    });
 				return count
    }
   } 

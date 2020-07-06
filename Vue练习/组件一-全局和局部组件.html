@@ -9,6 +9,7 @@
 		  <button-counter></button-counter>
 		  <button-counter></button-counter>
 		  <button-counter></button-counter>
+		  <component-a></component-a>
 		</div>
 		<script src="../js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -29,7 +30,16 @@
 							You clicked me {{ count }} times.
 							</button>`
 			})
-			var ComponentA = { /* ... */ }
+			var ComponentA = {  data: function () {
+			    return {
+			      count: 0
+			    }
+			  },
+			  // template 只支持单根元素，推荐使用' ` `' 波浪号 来包裹
+				// 需要多个层级时，用一个 <div></div> 包裹起来！
+			  template: `<button v-on:click="count++">
+							You clicked me {{ count }} times.
+							</button>`}
 			let vm = new Vue({
 				el: '#components-demo',
 				data: {
